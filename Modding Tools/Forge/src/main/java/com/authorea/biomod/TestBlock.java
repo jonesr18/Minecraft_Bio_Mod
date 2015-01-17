@@ -12,10 +12,18 @@ public class TestBlock extends Block {
 		super(Material.rock);
 		
 		// Sets the unlocalized block name - include the mod ID so there is no confusion
-		setUnlocalizedName(BioMod.MODID + "_" + "testBlock");
+		this.setUnlocalizedName(Reference.MODID + "_" + "testBlock");
 		
 		// Sets where the block is found in creative mode
-		setCreativeTab(CreativeTabs.tabBlock);
-	}
-	
+		this.setCreativeTab(CreativeTabs.tabBlock);
+		
+		// Set hardness to a float value. 0.5F -> dirt, 50.0F -> obsidian
+		this.setHardness(5.0F);
+		
+		// Set resistance to explosions 6,000,000.0F -> bedrock
+		this.setResistance(50.0F);
+		
+		// Set the sound when walked on
+		this.setStepSound(Block.soundTypeStone);
+	}	
 }

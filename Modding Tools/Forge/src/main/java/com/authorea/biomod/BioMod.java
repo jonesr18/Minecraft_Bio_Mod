@@ -3,28 +3,42 @@ package com.authorea.biomod;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = BioMod.MODID, version = BioMod.VERSION)
+@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
 public class BioMod {
-	
-	public static final String MODID = "biomod";
-	public static final String VERSION = "0.1.0";
-	
-	// Blocks must be declared as fields
+		
+	// Blocks, items, and event handlers must be declared as fields
 	public static Block newkidontheBlock;
+	public static Item testItem;
+	TestEventHandler events = new TestEventHandler();
+	
+	// This helps stop client from messing us up. Not sure how really.
+	@Instance(Reference.MODID)
+	public static BioMod instance;
+	
+	// For setting up a proxy to be used by the client or server differently
+	@SidedProxy(clientSide = "com.authorea.biomod.client.ClientProxy", 
+			serverSide = "com.authorea.biomod.client.CommonProxy")
+	public static CommonProxy proxy;
 	
 	
 	@EventHandler
 	/*
 	 * This is a pre-initialization method.
 	 * 
-	 * Here we declare recipes, blocks, smelting info, etc that we are adding in our mod.
+	 * Here we declare recipes, blocks, items, events, smelting info, for our mod.
 	 */
 	public void preinit(FMLPreInitializationEvent event) {
 		// Add a recipe in which 9 cookies gives an obsidian block
@@ -72,10 +86,24 @@ public class BioMod {
 		newkidontheBlock = new TestBlock();
 		GameRegistry.registerBlock(newkidontheBlock, "testBlock");
 		
+		// Add a test item
+		testItem = new TestItem();
+		GameRegistry.registerItem(testItem, "testItem");
+		
+		// Events can be registered with FML and forge like so:
+		FMLCommonHandler.instance().bus().register(events);
+		MinecraftForge.EVENT_BUS.register(events);
 	}
+	
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		
+	}
+	
+	
+	@EventHandler
+	public void postinit(FMLPostInitializationEvent event) {
 		
 	}
 }
