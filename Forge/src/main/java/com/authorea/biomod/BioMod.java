@@ -71,7 +71,7 @@ public class BioMod {
 		});
 		
 		// Add a shapeless recipe to make 2 red dye (dye metadata 1)
-		GameRegistry.addRecipe(new ItemStack(Items.dye, 2, 1), new Object [] {
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.dye, 2, 1), new Object [] {
 			new ItemStack(Items.dye, 1, 1), 		// 1 red dye
 			Items.redstone
 		});
